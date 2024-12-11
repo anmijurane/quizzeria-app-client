@@ -45,6 +45,6 @@ export const Tabs: FC<Props> = ({ items, typeComponent, classList }) => {
   const Component = listOfComponent[typeComponent];
 
   return items.map(item => (
-    <Component {...item}></Component>
+    <Component key={item.label} {...item}></Component>
   ))
 }
