@@ -5,7 +5,12 @@ import {HTTP} from "../Http/AxiosInstance.ts";
 const initialStateSubject:SubjectState = {
   items: [],
   length: 0,
-  current: {},
+  current: {
+    id: '',
+    description: '',
+    name: '',
+    status: '',
+  },
 }
 
 export const useSubjectsStore = create<SubjectSlice>((set, get) => ({
@@ -20,6 +25,6 @@ export const useSubjectsStore = create<SubjectSlice>((set, get) => ({
   setCurrentSubject: (id: string) => {
     const state = get();
     const current = state.items.find((item) => item.id === id);
-    set({ current: current });
+    set({ current: current || initialStateSubject.current });
   },
 }));

@@ -8,7 +8,7 @@ export interface Subject {
 export interface SubjectState {
   items: Subject[];
   length: number;
-  current: Subject | object;
+  current: Subject;
 }
 
 export interface SubjectActions {
