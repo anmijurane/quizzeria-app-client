@@ -8,20 +8,19 @@ export const Questionary = () => {
 
   const navigate = useNavigate()
 
-  const getQuestions = useQuestionaryStore(state => state.getQuestions);
+  const initQuestionary = useQuestionaryStore(state => state.initQuestionary)
   const subject = useSubjectsStore(state => state.current);
 
   useEffect(() => {
     if (!subject.id) {
       navigate('/');
     }
-  }, [navigate, subject])
+  }, [navigate, subject]);
 
-  const initQuestionary = async () => {
-    await getQuestions(subject.id);
+  const handleInitQuestionary = async () => {
+    const firstQuestionId = await initQuestionary(subject.id);
+    navigate(`/question/${firstQuestionId}`);
   }
-
-  console.log(subject)
 
   return (
     <ProtectedLayout>
@@ -32,7 +31,7 @@ export const Questionary = () => {
         </div>
 
         <div className="flex justify-center items-center">
-          <Button variant='destructive' onClick={() => initQuestionary()}>Iniciar</Button>
+          <Button variant='destructive' onClick={handleInitQuestionary}>Iniciar</Button>
         </div>
 
       </div>
