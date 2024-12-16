@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 
 import { MenuActions } from '@interfaces/menu-actions';
 
-type typeComponent = 'LinkRRD' | 'NavLinkRRD';
+type typeComponent = 'LinkRRD' | 'NavLinkRRD' | 'button';
 
 interface Props {
   items: MenuActions[];
@@ -40,6 +40,7 @@ export const Tabs: FC<Props> = ({ items, typeComponent, classList }) => {
   const listOfComponent = {
     ['LinkRRD']: (props: MenuActions) => <LinkCustom {...props} />,
     ['NavLinkRRD']: (props: MenuActions) => <NavlinkCustom {...props} />,
+    ['button']: (props: MenuActions) => <button className={classList?.default} onClick={props.toAction}>{props.label}</button>
   }
 
   const Component = listOfComponent[typeComponent];
