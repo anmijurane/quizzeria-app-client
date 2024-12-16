@@ -18,7 +18,7 @@ export interface Answers {
 export type QuestionWithAnswer = Question & Partial<Answers>
 
 export interface QuestionState {
-  current: QuestionWithAnswer | object;
+  current: QuestionWithAnswer;
   items: QuestionWithAnswer[];
   length: number
 }
@@ -26,6 +26,7 @@ export interface QuestionState {
 export interface QuestionActions {
   getAnswers: (questionId: string) => Promise<void>;
   getQuestions: (subjectId: string) => Promise<void>;
+  initQuestionary: (questionId: string) => Promise<string | undefined>;
   setAnswerSelected: (questionId: string, answerId: string) => void;
   setCurrentQuestion: (questionId: string) => void;
 }
