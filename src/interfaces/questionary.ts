@@ -15,18 +15,33 @@ export interface Answers {
   totalAnswers: number;
 }
 
+export interface Pointer {
+  actual: number;
+  next: number;
+  previous: number;
+  total: number;
+  order: UnorderedQuestions[];
+}
+
+export interface UnorderedQuestions {
+  id: string;
+  answered: boolean;
+}
+
 export type QuestionWithAnswer = Question & Partial<Answers>
 
 export interface QuestionState {
   current: QuestionWithAnswer;
   items: QuestionWithAnswer[];
-  length: number
+  length: number;
+  pointer: Pointer;
 }
 
 export interface QuestionActions {
-  getAnswers: (questionId: string) => Promise<void>;
+  getAnswers: () => Promise<void>;
   getQuestions: (subjectId: string) => Promise<void>;
   initQuestionary: (questionId: string) => Promise<string | undefined>;
+  nextQuestion: () => Promise<void>;
   setAnswerSelected: (questionId: string, answerId: string) => void;
   setCurrentQuestion: (questionId: string) => void;
 }
