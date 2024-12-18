@@ -19,12 +19,12 @@ export const Questionary = () => {
 
   const handleInitQuestionary = async () => {
     const firstQuestionId = await initQuestionary(subject.id);
-    navigate(`/question/${firstQuestionId}`);
+    navigate(`/quiz/${subject.id}/question/${firstQuestionId}`);
   }
 
   return (
     <ProtectedLayout>
-      <div className="min-w-min min-h-96 flex flex-col justify-around p-10">
+      <div className="min-w-min min-h-96 flex flex-col justify-around p-10 shadow">
         <div className="flex mx-auto max-v-7xl px-4 py-6 sm:px-6 lg:px-8 justify-center items-center flex-col">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900 pb-3">{subject.name}</h1>
           <p>{subject.description}</p>

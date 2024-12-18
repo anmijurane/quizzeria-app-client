@@ -7,15 +7,27 @@ const routes: RouteObject[] = [
     Component: HomePage,
     errorElement: "Handle Error",
   },
-  {
+  /* {
     path: '/questionary/:id',
     Component: Questionary,
     errorElement: "Handle Error",
+  },*/
+  {
+    path: '/quiz',
+    children: [
+      {
+        path: ':quiz_id',
+        Component: Questionary
+      },
+      {
+        path: ':quiz_id/question/:question_id',
+        Component: AnswerQuestionary,
+      }
+    ]
   },
   {
-    path: '/question/:id',
-    Component: AnswerQuestionary,
-    errorElement: "Handle Error",
+    path: '*',
+    Component: () => <h1>Not found</h1>,
   }
 ];
 

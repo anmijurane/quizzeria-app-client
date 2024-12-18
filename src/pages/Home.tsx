@@ -34,7 +34,7 @@ export const HomePage = () => {
 
   const initialQuestionary = (subject: Pick<Subject, 'id'>) => {
     setCurrentSubject(subject.id);
-    navigate(`/questionary/${subject.id}`);
+    navigate(`/quiz/${subject.id}`);
   }
 
   return (
