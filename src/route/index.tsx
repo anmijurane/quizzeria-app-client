@@ -7,11 +7,6 @@ const routes: RouteObject[] = [
     Component: HomePage,
     errorElement: "Handle Error",
   },
-  /* {
-    path: '/questionary/:id',
-    Component: Questionary,
-    errorElement: "Handle Error",
-  },*/
   {
     path: '/quiz',
     children: [
