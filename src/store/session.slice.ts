@@ -1,33 +1,40 @@
-import { create } from "zustand";
-import { HTTP } from "../Http/AxiosInstance";
-import {LoginRequest, LoginResponse, SessionSlice, SessionState} from "../interfaces/userSession";
-import {saveJWT} from "../utils/dataInfra.ts";
+import { WrapperSlice } from "@src/store/Wrapper.ts";
+import { saveJWT } from "@src/utils/dataInfra.ts";
+import { SessionSlice, SessionState } from "@interfaces/userSession";
+import { loginService } from "@src/Http/session.service.ts";
 
 export const initialStateSession: SessionState = {
   name: '',
   email: '',
   roles: [],
   token: '',
-  username: ''
-}
+  username: '',
+  isActiveSession: false,
+  loading: false,
+};
 
-export const useSessionStore = create<SessionSlice>((set) => {
+export const useSessionStore = WrapperSlice<SessionSlice>('session', (set) => {
   return {
     ...initialStateSession,
     login: async (email: string, password: string) => {
-      const response = await HTTP.POST<LoginResponse, LoginRequest>('/api/auth/login', { email, password });
-      saveJWT(response.data.token);
-      return set({
-        name: response.data.name,
-        username: response.data.username,
-        email: response.data.email,
-        token: response.data.token,
-        roles: response.data.roles,
-      })
+      set({ loading: true });
+      try {
+        const response = await loginService({ email, password });
+        saveJWT(response.data.token);
+        return set({
+          name: response.data.name,
+          username: response.data.username,
+          email: response.data.email,
+          token: response.data.token,
+          roles: response.data.roles,
+          isActiveSession: true,
+        });
+      } catch (e) {
+        console.error(e);
+      } finally {
+        set({ loading: false });
+      }
     },
-    logout: async () => {
-      // await HTTP.POST<>('/api/auth/logout');
-      set(initialStateSession, false);
-    }
+    logout: async () => set(initialStateSession, false)
   }
-})
+});
