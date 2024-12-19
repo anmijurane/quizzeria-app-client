@@ -4,6 +4,8 @@ export interface SessionState {
   username: string;
   email: string;
   token: string;
+  isActiveSession: boolean;
+  loading: boolean;
 }
 
 export interface SessionActions {
@@ -27,3 +29,6 @@ export interface LoginResponse {
   username: string;
 }
 
+export interface LogoutRequest {};
+
+export interface LoginResponse {};
