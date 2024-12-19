@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 
 export const useToggle = (initialValue = false): [boolean, () => void] => {
 
@@ -12,7 +12,7 @@ export const useToggle = (initialValue = false): [boolean, () => void] => {
 
 }
 
-export const useToggleWithValue = <T, S>(firstValue: T, secondValue: T):[T, React.MouseEventHandler<HTMLButtonElement> | S] => {
+export const useToggleWithValue = <T, S>(firstValue: T, secondValue: T):[T, () => void | S] => {
   const [stateValue, setStateValue] = useState(true);
 
   const handleToggle = () => {

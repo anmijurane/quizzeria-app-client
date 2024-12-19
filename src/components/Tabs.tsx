@@ -9,18 +9,18 @@ interface Props {
   items: MenuActions[];
   typeComponent: typeComponent;
   classList?: {
-    whenisActive?: string;
-    whenIsntActive?: string;
+    whenIsActive?: string;
+    whenNotActive?: string;
     default: string
   };
 }
 
 export const Tabs: FC<Props> = ({ items, typeComponent, classList }) => {
 
-  const NavlinkCustom = (props: MenuActions) => props.disable ? null : (
+  const NavLinkCustom = (props: MenuActions) => props.disable ? null : (
     <NavLink
       to={props?.to || ''}
-      className={({ isActive }) => `${classList?.default} ${isActive ? classList?.whenisActive || '' : classList?.whenIsntActive || ''}`}
+      className={({ isActive }) => `${classList?.default} ${isActive ? classList?.whenIsActive || '' : classList?.whenNotActive || ''}`}
     >
       {/* Implement toAction */}
       {props.label}
@@ -39,7 +39,7 @@ export const Tabs: FC<Props> = ({ items, typeComponent, classList }) => {
 
   const listOfComponent = {
     ['LinkRRD']: (props: MenuActions) => <LinkCustom {...props} />,
-    ['NavLinkRRD']: (props: MenuActions) => <NavlinkCustom {...props} />,
+    ['NavLinkRRD']: (props: MenuActions) => <NavLinkCustom {...props} />,
     ['button']: (props: MenuActions) => <button className={classList?.default} onClick={props.toAction}>{props.label}</button>
   }
 
