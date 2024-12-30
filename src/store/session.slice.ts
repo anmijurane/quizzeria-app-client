@@ -1,7 +1,7 @@
 import { WrapperSlice } from "@src/store/Wrapper.ts";
 import { saveJWT } from "@src/utils/dataInfra.ts";
 import { SessionSlice, SessionState } from "@interfaces/userSession";
-import { loginService } from "@src/Http/session.service.ts";
+import { checkSessionService, loginService } from "@src/Http/session.service.ts";
 
 export const initialStateSession: SessionState = {
   name: '',
@@ -35,6 +35,28 @@ export const useSessionStore = WrapperSlice<SessionSlice>('session', (set) => {
         set({ loading: false });
       }
     },
-    logout: async () => set(initialStateSession, false)
+    logout: async () => set(initialStateSession, false),
+    checkSession: async () => {
+      set({ loading: true });
+      try {
+        const { user, activeSession } = (await checkSessionService()).data;
+        if (activeSession) {
+          set({
+            name: user.name,
+            username: user.username,
+            email: user.email,
+            token: user.token,
+            roles: user.roles,
+            isActiveSession: activeSession,
+          });
+          return;
+        }
+        set({ ...initialStateSession });
+      } catch (error) {
+        console.error(error)
+      } finally {
+        set({ loading: false })
+      }
+    }
   }
 });

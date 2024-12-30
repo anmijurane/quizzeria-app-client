@@ -10,27 +10,18 @@ import { Subject } from "@interfaces/subject";
 export const HomePage = () => {
 
   const navigate = useNavigate();
-  const actionsSession = useSessionStore();
+  const checkSession = useSessionStore(state => state.checkSession);
   const subjectItems = useSubjectsStore(state => state.items);
   const setCurrentSubject = useSubjectsStore(state => state.setCurrentSubject);
   const getSubjects = useSubjectsStore(state => state.getSubjects);
-  // const actionsQuestionary = useQuestionaryStore()
-
-  useEffect(() => {
-    console.log({ actionsSession, subjectItems })
-  });
-
-  // const handleSetSubject = async (subjectId: string) => {
-  //   actionsSubject.setCurrentSubject(subjectId);
-  //   await actionsQuestionary.getQuestions(subjectId);
-  // }
 
   useEffect(() => {
     const init = async () => {
+      await checkSession();
       await getSubjects();
     }
     init();
-  }, [getSubjects]);
+  }, []);
 
   const initialQuestionary = (subject: Pick<Subject, 'id'>) => {
     setCurrentSubject(subject.id);
