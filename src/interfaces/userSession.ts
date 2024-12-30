@@ -11,6 +11,7 @@ export interface SessionState {
 export interface SessionActions {
   login: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  checkSession: () => Promise<void>;
 }
 
 export type SessionSlice = SessionState & SessionActions;
@@ -32,3 +33,8 @@ export interface LoginResponse {
 export interface LogoutRequest {};
 
 export interface LoginResponse {};
+
+export interface VerifySessionResponse {
+  user: LoginResponse;
+  activeSession: boolean;
+};
