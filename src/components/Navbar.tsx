@@ -3,9 +3,9 @@ import type { FC, MouseEventHandler, PropsWithChildren } from 'react';
 import { useToggleWithValue } from '@hooks/useToggle';
 import { navbarItems } from '@src/utils/menu-actions';
 import { Tabs } from './Tabs';
-import {useSessionStore} from "@src/store";
-import {MenuProfile} from "@components/MenuProfile.tsx";
-import {Button} from "@ui/button.tsx";
+import { useSessionStore } from "@src/store";
+import { MenuProfile } from "@components/MenuProfile.tsx";
+import { Button } from "@ui/button.tsx";
 
 type Props = PropsWithChildren
 
@@ -16,7 +16,7 @@ export const Navbar: FC<Props> = () => {
   const [menuAppMobile, toggleMenuAppMobile] = useToggleWithValue<string, MouseEventHandler<HTMLButtonElement>>('hidden', 'block');
 
   const loginAction = async () => {
-    await loginSession('anmijurane1@gmail.com','Rn@i8Adf2');
+    await loginSession('anmijurane1@gmail.com', 'Rn@i8Adf2');
   }
 
   return (
