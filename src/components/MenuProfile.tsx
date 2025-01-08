@@ -32,12 +32,12 @@ export const MenuProfile = () => {
         <DropdownMenuLabel>{name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => console.log('Editar perfil')}>
-            Editar perfil
+          <DropdownMenuItem onClick={console.log} disabled>
+            Editar perfil (Proximamente)
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => logout()}>
+          <DropdownMenuItem onClick={logout}>
             Cerrar session
           </DropdownMenuItem>
           </DropdownMenuGroup>

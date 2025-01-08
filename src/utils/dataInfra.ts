@@ -25,6 +25,12 @@ export const saveJWT = (token: string) => {
   return true;
 }
 
+export const removeJWT = () => {
+  localStorage.removeItem(cryptValues.jwt.header);
+  localStorage.removeItem(cryptValues.jwt.payload);
+  localStorage.removeItem(cryptValues.jwt.signature);
+}
+
 export  const getXTimeUser = () => {
   return new Date().getTime();
 }

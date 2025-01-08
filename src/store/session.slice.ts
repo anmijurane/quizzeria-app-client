@@ -1,5 +1,5 @@
 import { WrapperSlice } from "@src/store/Wrapper.ts";
-import { saveJWT } from "@src/utils/dataInfra.ts";
+import {removeJWT, saveJWT} from "@src/utils/dataInfra.ts";
 import { SessionSlice, SessionState } from "@interfaces/userSession";
 import { checkSessionService, loginService } from "@src/Http/session.service.ts";
 
@@ -35,7 +35,10 @@ export const useSessionStore = WrapperSlice<SessionSlice>('session', (set) => {
         set({ loading: false });
       }
     },
-    logout: async () => set(initialStateSession, false),
+    logout: async () => {
+      set(initialStateSession, false);
+      removeJWT();
+    },
     checkSession: async () => {
       set({ loading: true });
       try {

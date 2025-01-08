@@ -5,10 +5,6 @@ export const navbarItems: MenuActions[] = [
     label: 'Inicio',
     to: '/',
   },
-  {
-    label: 'Preguntas',
-    to: '/questions',
-  },
 ];
 
 export const profileMenuActions:MenuActions[] = [

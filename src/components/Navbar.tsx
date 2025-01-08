@@ -5,19 +5,13 @@ import { navbarItems } from '@src/utils/menu-actions';
 import { Tabs } from './Tabs';
 import { useSessionStore } from "@src/store";
 import { MenuProfile } from "@components/MenuProfile.tsx";
-import { Button } from "@ui/button.tsx";
+import { LoginDialog } from "@components/LoginDialog.tsx";
 
 type Props = PropsWithChildren
 
 export const Navbar: FC<Props> = () => {
-
-  const loginSession = useSessionStore(state => state.login);
   const isActiveSession = useSessionStore(state => state.isActiveSession)
   const [menuAppMobile, toggleMenuAppMobile] = useToggleWithValue<string, MouseEventHandler<HTMLButtonElement>>('hidden', 'block');
-
-  const loginAction = async () => {
-    await loginSession('anmijurane1@gmail.com', 'Rn@i8Adf2');
-  }
 
   return (
     <nav className="bg-gray-800">
@@ -55,7 +49,7 @@ export const Navbar: FC<Props> = () => {
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <div className="relative ml-3">
-              {isActiveSession ? <MenuProfile /> : <Button variant="secondary" onClick={loginAction}>Iniciar Sesion</Button>}
+              {isActiveSession ? <MenuProfile /> : <LoginDialog />}
             </div>
           </div>
         </div>
