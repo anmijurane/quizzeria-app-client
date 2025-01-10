@@ -2,20 +2,20 @@ import { MenuActions } from '@interfaces/menu-actions';
 
 export const navbarItems: MenuActions[] = [
   {
-    label: 'Inicio',
+    label: 'home',
     to: '/',
   },
 ];
 
 export const profileMenuActions:MenuActions[] = [
   {
-    label: 'Editar perfil',
-    secondaryLabel: '(Proximamente)',
+    label: 'edit profile',
+    secondaryLabel: '(comming soon)',
     toAction: () => alert('funcionalidad Proximamente'),
     disable: false,
   },
   {
-    label: 'Cerrar sesion',
+    label: 'logout',
     //TODO: create a implementation close session with backend
     toAction: () => alert('Cerrar Session')
   }
