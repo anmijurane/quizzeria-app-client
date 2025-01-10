@@ -1,0 +1,16 @@
+{
+  "select questionary": "Elije un cuestionario",
+  "question n": "Pregunta: {{pointer}}",
+  "next question": "Siguiente pregunta",
+  "init": "Iniciar",
+  "home": "Inicio",
+  "edit profile": "Editar perfil",
+  "(comming soon)": "(Proximamente)",
+  "logout": "Cerrar sesion",
+  "login": "Iniciar sesion",
+  "or you can register": "o puedes registrarte",
+  "email": "Correo electronico",
+  "password": "Contraseña",
+  "access": "Aceder",
+  "register": "Registrarse"
+}
