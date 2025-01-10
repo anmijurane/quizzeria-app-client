@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import { MenuActions } from '@interfaces/menu-actions';
+import { useTranslation } from 'react-i18next';
 
 type typeComponent = 'LinkRRD' | 'NavLinkRRD' | 'button';
 
@@ -17,13 +18,15 @@ interface Props {
 
 export const Tabs: FC<Props> = ({ items, typeComponent, classList }) => {
 
+  const { t } = useTranslation();
+
   const NavLinkCustom = (props: MenuActions) => props.disable ? null : (
     <NavLink
       to={props?.to || ''}
       className={({ isActive }) => `${classList?.default} ${isActive ? classList?.whenIsActive || '' : classList?.whenNotActive || ''}`}
     >
       {/* Implement toAction */}
-      {props.label}
+      {t(props.label)}
     </NavLink>
   );
 
@@ -33,14 +36,14 @@ export const Tabs: FC<Props> = ({ items, typeComponent, classList }) => {
       className={classList?.default}
     >
       {/* Implement toAction */}
-      {props.label}
+      {t(props.label)}
     </Link>
   )
 
   const listOfComponent = {
     ['LinkRRD']: (props: MenuActions) => <LinkCustom {...props} />,
     ['NavLinkRRD']: (props: MenuActions) => <NavLinkCustom {...props} />,
-    ['button']: (props: MenuActions) => <button className={classList?.default} onClick={props.toAction}>{props.label}</button>
+    ['button']: (props: MenuActions) => <button className={classList?.default} onClick={props.toAction}>{t(props.label)}</button>
   }
 
   const Component = listOfComponent[typeComponent];

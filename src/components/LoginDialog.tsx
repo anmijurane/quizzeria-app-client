@@ -11,6 +11,7 @@ import { useSessionStore } from '@src/store';
 import { Separator } from '@ui/separator';
 import { Button } from '@ui/button';
 import { Input } from '@ui/input.tsx';
+import { useTranslation } from 'react-i18next';
 
 const LABELS_FORM = {
   EMAIL: 'email',
@@ -18,6 +19,7 @@ const LABELS_FORM = {
 }
 
 export const LoginDialog = () => {
+  const { t } = useTranslation();
   const loginSession = useSessionStore(state => state.login);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -36,23 +38,23 @@ export const LoginDialog = () => {
   return (
     <Dialog>
       <DialogTrigger className='justify-center'>
-        <Button variant='secondary' type='button'>Iniciar Sesion</Button>
+        <Button variant='secondary' type='button'>{t('login')}</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Iniciar Sesion</DialogTitle>
-          <DialogDescription>o puedes registrarte</DialogDescription>
+          <DialogTitle>{t('login')}</DialogTitle>
+          <DialogDescription>{t('or you can register')}</DialogDescription>
         </DialogHeader>
         <form ref={formRef} onSubmit={loginAction}>
-          <Input name={LABELS_FORM.EMAIL} placeholder='Correo electronico' defaultValue='anmijurane1@gmail.com'/>
-          <Input name={LABELS_FORM.PASSWORD} type='password' placeholder='Contraseña' defaultValue='Rn@i8Adf2'/>
+          <Input name={LABELS_FORM.EMAIL} placeholder={t('email')} defaultValue='anmijurane1@gmail.com' />
+          <Input name={LABELS_FORM.PASSWORD} type='password' placeholder={t('password')} defaultValue='Rn@i8Adf2' />
           <div className='flex justify-center w-full flex-col mt-6'>
             <Button type='submit' className='w-full'>
-              Acceder
+              {t('access')}
             </Button>
-            <Separator className='my-4'/>
+            <Separator className='my-4' />
             <Button type='button' variant='link' onClick={console.log}>
-              Registrarse
+              {t('register')}
             </Button>
           </div>
         </form>
