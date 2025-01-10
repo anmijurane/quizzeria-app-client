@@ -1,4 +1,4 @@
-import {useMemo} from "react";
+import { useMemo } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,10 +8,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@ui/dropdown-menu";
-import {Avatar, AvatarFallback} from "@ui/avatar.tsx";
-import {useSessionStore} from "@src/store";
+import { Avatar, AvatarFallback } from "@ui/avatar";
+import { useSessionStore } from "@src/store";
+import { useTranslation } from "react-i18next";
 
 export const MenuProfile = () => {
+  const { t } = useTranslation();
   const logout = useSessionStore(state => state.logout);
   const name = useSessionStore(state => state.name);
 
@@ -33,14 +35,14 @@ export const MenuProfile = () => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={console.log} disabled>
-            Editar perfil (Proximamente)
+            {t('edit profile')} {t('(comming soon)')}
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={logout}>
-            Cerrar session
+            {t('logout')}
           </DropdownMenuItem>
-          </DropdownMenuGroup>
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )

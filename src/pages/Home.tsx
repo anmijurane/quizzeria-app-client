@@ -6,8 +6,11 @@ import { Badge } from "@ui/badge";
 import { Button } from "@src/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Subject } from "@interfaces/subject";
+import { useTranslation } from "react-i18next";
 
 export const HomePage = () => {
+
+  const { ready, t } = useTranslation();
 
   const navigate = useNavigate();
   const checkSession = useSessionStore(state => state.checkSession);
@@ -28,11 +31,15 @@ export const HomePage = () => {
     navigate(`/quiz/${subject.id}`);
   }
 
+  if (!ready) {
+    return <h1>... cargando ...</h1>
+  }
+
   return (
     <ProtectedLayout>
       <div className="bg-white shadow">
         <div className="mx-auto max-v-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Elije un questionario</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">{t('select questionary')}</h1>
         </div>
       </div>
       <div className="bg-white shadow">
@@ -56,7 +63,7 @@ export const HomePage = () => {
                     onClick={() => initialQuestionary(subject)}
                     className="text-white text-1xl uppercase"
                   >
-                    Iniciar
+                    {t('init')}
                   </Button>
                 </CardFooter>
               </Card>
