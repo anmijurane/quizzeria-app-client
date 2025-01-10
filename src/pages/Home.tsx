@@ -6,8 +6,11 @@ import { Badge } from "@ui/badge";
 import { Button } from "@src/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Subject } from "@interfaces/subject";
+import { useTranslation } from "react-i18next";
 
 export const HomePage = () => {
+
+  const { ready, t, i18n } = useTranslation();
 
   const navigate = useNavigate();
   const checkSession = useSessionStore(state => state.checkSession);
@@ -28,12 +31,24 @@ export const HomePage = () => {
     navigate(`/quiz/${subject.id}`);
   }
 
+  if (!ready) {
+    return <h1>... cargando ...</h1>
+  }
+
+  const handleOnChangeLanguage = (lang: string) => {
+    i18n.changeLanguage(lang);
+  }
+
   return (
     <ProtectedLayout>
       <div className="bg-white shadow">
         <div className="mx-auto max-v-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Elije un questionario</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">{t('select questionary')}</h1>
         </div>
+      </div>
+      <div className="bg-brown shadow">
+        <Button onClick={() => handleOnChangeLanguage('es-MX')} variant='destructive'>Español</Button>
+        <Button onClick={() => handleOnChangeLanguage('en-US')} variant='outline'>Ingles</Button>
       </div>
       <div className="bg-white shadow">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -56,7 +71,7 @@ export const HomePage = () => {
                     onClick={() => initialQuestionary(subject)}
                     className="text-white text-1xl uppercase"
                   >
-                    Iniciar
+                    {t('init')}
                   </Button>
                 </CardFooter>
               </Card>

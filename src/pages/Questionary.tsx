@@ -2,11 +2,13 @@ import { Button } from "@src/components/ui/button";
 import { ProtectedLayout } from "@src/layouts/Protected";
 import { useQuestionaryStore, useSubjectsStore } from "@src/store";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 export const Questionary = () => {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const initQuestionary = useQuestionaryStore(state => state.initQuestionary)
   const subject = useSubjectsStore(state => state.current);
@@ -31,7 +33,7 @@ export const Questionary = () => {
         </div>
 
         <div className="flex justify-center items-center">
-          <Button variant='destructive' onClick={handleInitQuestionary}>Iniciar</Button>
+          <Button variant='destructive' onClick={handleInitQuestionary}>{t('init')}</Button>
         </div>
 
       </div>

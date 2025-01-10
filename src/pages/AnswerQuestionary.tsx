@@ -1,14 +1,16 @@
-import {useQuestionaryStore} from "@src/store";
-import {ProtectedLayout} from "@src/layouts/Protected.tsx";
-import {Button} from "@ui/button.tsx";
-import {useEffect, useMemo, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {Progress} from "@ui/progress.tsx";
+import { useQuestionaryStore } from "@src/store";
+import { ProtectedLayout } from "@src/layouts/Protected.tsx";
+import { Button } from "@ui/button.tsx";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Progress } from "@ui/progress.tsx";
+import { useTranslation } from "react-i18next";
 
 const LETTERS = ['A', 'B', 'C', 'D', 'E'];
 
 export const AnswerQuestionary = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const currentQuestion = useQuestionaryStore(state => state.current);
   useEffect(() => {
     if (!currentQuestion.id) {
@@ -72,7 +74,7 @@ export const AnswerQuestionary = () => {
           </div>
         </div>
         <div className="flex mx-auto max-v-7xl px-4 py-6 sm:px-6 lg:px-8 justify-center items-center flex-col">
-          <h2 className="text-3x text-gray-500 pb-3">Pregunta: {pointer.actual + 1}</h2>
+          <h2 className="text-3x text-gray-500 pb-3">{t('question n', { pointer: pointer.actual + 1 })}</h2>
           <p className='text-3xl font-bold text-gray-900'>{titleMemo}</p>
         </div>
         <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6">
@@ -90,7 +92,7 @@ export const AnswerQuestionary = () => {
       </div>
       <Button
         onClick={handleOnNextQuestion}
-      >Siguiente pregunta</Button>
+      >{t('next question')}</Button>
     </ProtectedLayout>
   );
 };
