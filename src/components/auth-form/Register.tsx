@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from "react-hook-form"
 
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@ui/form";
 import { Input } from "@ui/input";
 
 import { formRegisterSchema, type FormRegisterZod } from '@schemas/auth-form';
@@ -32,9 +32,6 @@ export const RegisterForm: FC<PropsWithChildren> = ({ children }) => {
                 <FormControl>
                   <Input placeholder={t('name')} {...field} />
                 </FormControl>
-                <FormDescription>
-                  Escribe tu nombre
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -48,9 +45,6 @@ export const RegisterForm: FC<PropsWithChildren> = ({ children }) => {
                 <FormControl>
                   <Input placeholder={t('username')} {...field} />
                 </FormControl>
-                <FormDescription>
-                  Escribe tu alias
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -64,9 +58,6 @@ export const RegisterForm: FC<PropsWithChildren> = ({ children }) => {
                 <FormControl>
                   <Input placeholder={t('email')} type='email' {...field} />
                 </FormControl>
-                <FormDescription>
-                  The email is a public
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -80,9 +71,6 @@ export const RegisterForm: FC<PropsWithChildren> = ({ children }) => {
                 <FormControl>
                   <Input placeholder={t('password')} {...field} />
                 </FormControl>
-                <FormDescription>
-                  Escribe tu contraseña
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -96,9 +84,6 @@ export const RegisterForm: FC<PropsWithChildren> = ({ children }) => {
                 <FormControl>
                   <Input placeholder={t('confirm password')} {...field} />
                 </FormControl>
-                <FormDescription>
-                  Confirma tu contraseña
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

@@ -1,4 +1,5 @@
-import type { FC, MouseEventHandler, PropsWithChildren } from 'react';
+import { useMemo, type FC, type MouseEventHandler, type PropsWithChildren } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { useToggleWithValue } from '@hooks/useToggle';
 import { navbarItems } from '@src/utils/menu-actions';
@@ -6,12 +7,16 @@ import { Tabs } from './Tabs';
 import { useSessionStore } from "@src/store";
 import { MenuProfile } from "@components/MenuProfile.tsx";
 import { LoginDialog } from "@components/LoginDialog.tsx";
+import { Show } from '@ui/show';
 
 type Props = PropsWithChildren
 
 export const Navbar: FC<Props> = () => {
+  const location = useLocation();
   const isActiveSession = useSessionStore(state => state.isActiveSession)
   const [menuAppMobile, toggleMenuAppMobile] = useToggleWithValue<string, MouseEventHandler<HTMLButtonElement>>('hidden', 'block');
+
+  const isRegisterView = useMemo(() => location.pathname.includes('/auth/register'), [location.pathname]);
 
   return (
     <nav className="bg-gray-800">
@@ -47,11 +52,15 @@ export const Navbar: FC<Props> = () => {
               </div>
             </div>
           </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <div className="relative ml-3">
-              {isActiveSession ? <MenuProfile /> : <LoginDialog />}
+          <Show when={!isRegisterView}>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <div className="relative ml-3">
+                <Show when={isActiveSession} fallback={<LoginDialog />}>
+                  <MenuProfile />
+                </Show>
+              </div>
             </div>
-          </div>
+          </Show>
         </div>
       </div>
 
