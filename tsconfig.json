@@ -13,6 +13,7 @@
       "@hooks/*": ["./src/hooks/*"],
       "@lib/*": ["./src/lib/*"],
       "@interfaces/*": ["./src/interfaces/*"],
+      "@schemas/*": ["./src/schemas/*"],
     }
   }
 }
