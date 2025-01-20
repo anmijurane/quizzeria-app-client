@@ -1,5 +1,7 @@
 import { createBrowserRouter, type RouteObject } from "react-router-dom";
 import { HomePage, Questionary, AnswerQuestionary } from "../pages";
+import { AuthLayout } from "@src/layouts/Auth";
+import { Register } from "@src/pages/Register";
 
 const routes: RouteObject[] = [
   {
@@ -17,6 +19,17 @@ const routes: RouteObject[] = [
       {
         path: ':quiz_id/question/:question_id',
         Component: AnswerQuestionary,
+      }
+    ]
+  },
+  {
+    path: 'auth',
+    element: <AuthLayout />,
+    errorElement: 'Auth Handle Error',
+    children: [
+      {
+        path: 'register',
+        element: <Register />,
       }
     ]
   },

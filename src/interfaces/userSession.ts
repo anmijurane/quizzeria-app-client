@@ -8,8 +8,13 @@ export interface SessionState {
   loading: boolean;
 }
 
+export interface ResolveServerRequest {
+  status: number;
+  codeError?: string;
+}
+
 export interface SessionActions {
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<ResolveServerRequest>;
   logout: () => Promise<void>;
   checkSession: () => Promise<void>;
 }

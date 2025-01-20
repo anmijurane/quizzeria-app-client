@@ -1,4 +1,8 @@
-import { FormEvent, useRef } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { CircleX } from 'lucide-react';
+
 import {
   Dialog,
   DialogContent,
@@ -6,58 +10,52 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@ui/dialog'
-import { useSessionStore } from '@src/store';
+} from '@ui/dialog';
 import { Separator } from '@ui/separator';
 import { Button } from '@ui/button';
-import { Input } from '@ui/input.tsx';
-import { useTranslation } from 'react-i18next';
-
-const LABELS_FORM = {
-  EMAIL: 'email',
-  PASSWORD: 'password',
-}
+import { LoginForm } from '@components/auth-form/Login';
+import { Alert, AlertDescription, AlertTitle } from '@ui/alert';
+import { Show } from './ui/show';
+import { useSessionStore } from '@src/store';
 
 export const LoginDialog = () => {
   const { t } = useTranslation();
-  const loginSession = useSessionStore(state => state.login);
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const loginAction = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (formRef.current) {
-      const form = new FormData(formRef.current);
-      const email = form.get('email') as string;
-      const password = form.get('password') as string;
-      // validate data
-      await loginSession(email, password);
-      console.log(form, email, password);
-    }
-  }
+  const navigate = useNavigate();
+  const isLoading = useSessionStore(state => state.loading);
+  const [bannerInfo, setBannerInfo] = useState({ title: '', description: '', show: false });
 
   return (
     <Dialog>
-      <DialogTrigger className='justify-center'>
-        <Button variant='secondary' type='button'>{t('login')}</Button>
-      </DialogTrigger>
+      <Button variant='secondary' type='button' asChild>
+        <DialogTrigger className='justify-center'>
+          {t('login')}
+        </DialogTrigger>
+      </Button>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t('login')}</DialogTitle>
           <DialogDescription>{t('or you can register')}</DialogDescription>
         </DialogHeader>
-        <form ref={formRef} onSubmit={loginAction}>
-          <Input name={LABELS_FORM.EMAIL} placeholder={t('email')} defaultValue='anmijurane1@gmail.com' />
-          <Input name={LABELS_FORM.PASSWORD} type='password' placeholder={t('password')} defaultValue='Rn@i8Adf2' />
+        <Show when={bannerInfo.show}>
+          <Alert variant='destructive'>
+            <CircleX />
+            <div className="ml-2 mt-1">
+              <AlertTitle>{t(bannerInfo.title)}</AlertTitle>
+              <AlertDescription>{t(bannerInfo.description)}</AlertDescription>
+            </div>
+          </Alert>
+        </Show>
+        <LoginForm errorsAlert={setBannerInfo}>
           <div className='flex justify-center w-full flex-col mt-6'>
-            <Button type='submit' className='w-full'>
+            <Button type='submit' className='w-full' disabled={isLoading}>
               {t('access')}
             </Button>
             <Separator className='my-4' />
-            <Button type='button' variant='link' onClick={console.log}>
+            <Button type='button' variant='link' onClick={() => navigate('/auth/register')} disabled={isLoading}>
               {t('register')}
             </Button>
           </div>
-        </form>
+        </LoginForm>
       </DialogContent>
     </Dialog>
   );
