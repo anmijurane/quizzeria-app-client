@@ -18,12 +18,20 @@ const defaultHeaders: defaultHeadersType = () => {
   }
 }
 
-const { get, post, patch, delete: delAxios, } = axios.create({
+const instanceAxios = axios.create({
   baseURL: BFF_URL_BASE
 });
 
+instanceAxios.interceptors.response.use(
+  response => response,
+  responseError => {
+    console.log(responseError);
+    return Promise.reject({ ...responseError, ...responseError.response.data.response })
+  }
+)
+
 const GET = <T>(url: string, headers?: headerDef) => {
-  return get<T>(
+  return instanceAxios.get<T>(
     url,
     {
       headers: {
@@ -35,7 +43,7 @@ const GET = <T>(url: string, headers?: headerDef) => {
 }
 
 const POST = <R, T>(url: string, data: T, headers?: headerDef) => {
-  return post<T, AxiosResponse<R>>(url, data, {
+  return instanceAxios.post<T, AxiosResponse<R>>(url, data, {
     headers: {
       ...defaultHeaders(),
       ...headers,
@@ -44,7 +52,7 @@ const POST = <R, T>(url: string, data: T, headers?: headerDef) => {
 }
 
 const PATCH = <R, T>(url: string, data: T, headers?: headerDef) => {
-  return patch<T, AxiosResponse<R>>(url, data, {
+  return instanceAxios.patch<T, AxiosResponse<R>>(url, data, {
     headers: {
       ...defaultHeaders(),
       ...headers,
@@ -52,7 +60,7 @@ const PATCH = <R, T>(url: string, data: T, headers?: headerDef) => {
   });}
 
 const DELETE = (url: string, headers?: headerDef) => {
-  return delAxios(url, {
+  return instanceAxios.delete(url, {
     headers: {
       ...defaultHeaders(),
       ...headers,
