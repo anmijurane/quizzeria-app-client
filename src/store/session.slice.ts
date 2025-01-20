@@ -1,6 +1,8 @@
+import { AxiosError, HttpStatusCode } from "axios";
+
 import { WrapperSlice } from "@src/store/Wrapper.ts";
 import {removeJWT, saveJWT} from "@src/utils/dataInfra.ts";
-import { SessionSlice, SessionState } from "@interfaces/userSession";
+import { ResolveServerRequest, SessionSlice, SessionState } from "@interfaces/userSession";
 import { checkSessionService, loginService } from "@src/Http/session.service.ts";
 
 export const initialStateSession: SessionState = {
@@ -18,22 +20,28 @@ export const useSessionStore = WrapperSlice<SessionSlice>('session', (set) => {
     ...initialStateSession,
     login: async (email: string, password: string) => {
       set({ loading: true });
+      let status: ResolveServerRequest;
       try {
         const response = await loginService({ email, password });
-        saveJWT(response.data.token);
-        return set({
-          name: response.data.name,
-          username: response.data.username,
-          email: response.data.email,
-          token: response.data.token,
-          roles: response.data.roles,
-          isActiveSession: true,
-        });
+        if (response.status === HttpStatusCode.Ok) {
+          saveJWT(response.data.token);
+          set({
+            name: response.data.name,
+            username: response.data.username,
+            email: response.data.email,
+            token: response.data.token,
+            roles: response.data.roles,
+            isActiveSession: true,
+          });
+        }
+        status = { status: response.status };
       } catch (e) {
-        console.error(e);
+        const errorAxios = e as AxiosError;
+        status = { status: errorAxios?.status || 500, codeError: errorAxios.code };
       } finally {
         set({ loading: false });
       }
+      return status;
     },
     logout: async () => {
       set(initialStateSession, false);
